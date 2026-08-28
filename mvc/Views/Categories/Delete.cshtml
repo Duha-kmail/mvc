@@ -1,0 +1,13 @@
+﻿@model Library_Management_System_mvc.Models.Category
+@{
+    ViewData["Title"] = "حذف تصنيف";
+}
+
+<h1>هل أنت متأكد من الحذف؟</h1>
+<div class="alert alert-danger"><h4>@Model.Name</h4></div>
+
+<form asp-action="Delete" method="post">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">نعم، احذف</button>
+    <a asp-action="Index" class="btn btn-outline-secondary">إلغاء</a>
+</form>

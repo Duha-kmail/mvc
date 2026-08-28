@@ -1,0 +1,22 @@
+@model IEnumerable<Library_Management_System_mvc.Models.Note>
+
+<div id="notesList">
+    @if (!Model.Any())
+    {
+        <div class="text-muted">لا توجد ملاحظات بعد.</div>
+    }
+    else
+    {
+        <ul class="list-group">
+            @foreach (var note in Model)
+            {
+                <li class="list-group-item d-flex justify-content-between align-items-start">
+                    <div>
+                        <div>@note.Content</div>
+                        <small class="text-muted">@note.CreatedAt.ToLocalTime().ToString("g")</small>
+                    </div>
+                </li>
+            }
+        </ul>
+    }
+</div>

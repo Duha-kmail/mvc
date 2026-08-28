@@ -1,0 +1,27 @@
+﻿@page
+@model Library_Management_System_mvc.Views.DetailsModel
+@{
+    ViewData["Title"] = "تفاصيل الكتاب";
+}
+
+<h1>تفاصيل الكتاب</h1>
+
+<dl class="row">
+    <dt class="col-sm-3">العنوان</dt>
+    <dd class="col-sm-9">@Model.Title</dd>
+
+    <dt class="col-sm-3">المؤلف</dt>
+    <dd class="col-sm-9">@Model.Author</dd>
+
+    <dt class="col-sm-3">ISBN</dt>
+    <dd class="col-sm-9">@Model.ISBN</dd>
+
+    <dt class="col-sm-3">التصنيف</dt>
+    <dd class="col-sm-9">@Model.Category?.Name</dd>
+
+    <dt class="col-sm-3">الحالة</dt>
+    <dd class="col-sm-9">@(Model.IsAvailable ? "متاح" : "مستعار")</dd>
+</dl>
+
+<a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">تعديل</a>
+<a asp-action="Index" class="btn btn-outline-secondary">رجوع للقائمة</a>

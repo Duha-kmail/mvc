@@ -1,0 +1,48 @@
+﻿@page
+@model IEnumerable<Library_Management_System_mvc.Models.BorrowRecord>
+@{
+    ViewData["Title"] = "الاستعارة";
+}
+
+<h1>سجلات الاستعارة</h1>
+<a asp-action="Create" class="btn btn-primary mb-3">+ تسجيل استعارة جديدة</a>
+
+<table class="table table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>الكتاب</th>
+            <th>العضو</th>
+            <th>تاريخ الاستعارة</th>
+            <th>تاريخ الإرجاع</th>
+            <th>إجراءات</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Book?.Title</td>
+                <td>@item.Member?.Name</td>
+                <td>@item.BorrowDate.ToShortDateString()</td>
+                <td>
+                    @if (item.ReturnDate.HasValue)
+                    {
+                        <span class="badge bg-success">تم الإرجاع: @item.ReturnDate.Value.ToShortDateString()</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-warning text-dark">لم يُرجع بعد</span>
+                    }
+                </td>
+                <td>
+                    @if (!item.ReturnDate.HasValue)
+                    {
+                        <form asp-action="Return" asp-route-id="@item.Id" method="post" class="d-inline">
+                            <button type="submit" class="btn btn-sm btn-success">تسجيل إرجاع</button>
+                        </form>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

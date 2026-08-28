@@ -1,0 +1,31 @@
+﻿@model Library_Management_System_mvc.Models.Member
+@{
+    ViewData["Title"] = "تفاصيل العضو";
+}
+
+<h1>@Model.Name</h1>
+<p>البريد الإلكتروني: @Model.Email</p>
+<p>الهاتف: @Model.Phone</p>
+
+<h3 class="mt-4">سجل الاستعارة</h3>
+<table class="table table-striped">
+    <thead class="table-dark">
+        <tr><th>الكتاب</th><th>تاريخ الاستعارة</th><th>تاريخ الإرجاع</th></tr>
+    </thead>
+    <tbody>
+        @if (Model.BorrowRecords != null)
+        {
+            @foreach (var r in Model.BorrowRecords)
+            {
+                <tr>
+                    <td>@r.Book?.Title</td>
+                    <td>@r.BorrowDate.ToShortDateString()</td>
+                    <td>@(r.ReturnDate.HasValue ? r.ReturnDate.Value.ToShortDateString() : "لم يُرجع بعد")</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+<a asp-action="Index" class="btn btn-outline-secondary">رجوع</a>
+

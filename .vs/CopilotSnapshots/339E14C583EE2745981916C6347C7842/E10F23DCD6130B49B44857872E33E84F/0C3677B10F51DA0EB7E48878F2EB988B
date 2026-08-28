@@ -1,0 +1,28 @@
+﻿@page
+@model Library_Management_System_mvc.Views.Borrow.CreateModel
+@{
+    ViewData["Title"] = "تسجيل استعارة";
+}
+
+<h1>تسجيل استعارة جديدة</h1>
+
+<form asp-action="Create" method="post" class="col-md-6">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="mb-3">
+        <label class="form-label">الكتاب</label>
+        <select asp-for="BookId" class="form-select" asp-items="ViewBag.BookId">
+            <option value="">-- اختر كتاب --</option>
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">العضو</label>
+        <select asp-for="MemberId" class="form-select" asp-items="ViewBag.MemberId">
+            <option value="">-- اختر عضو --</option>
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">تسجيل</button>
+    <a asp-action="Index" class="btn btn-outline-secondary">إلغاء</a>
+</form>

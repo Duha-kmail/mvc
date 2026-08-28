@@ -1,0 +1,30 @@
+﻿using Microsoft.EntityFrameworkCore;
+using Library_Management_System_mvc.Models;
+namespace Library_Management_System_mvc.Data
+{
+    public class LibraryContext:DbContext
+    {
+        public LibraryContext(DbContextOptions<LibraryContext> options) : base(options)
+        {
+        }
+
+        public DbSet<Book> Books { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Member> Members { get; set; }
+        public DbSet<BorrowRecord> BorrowRecords { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Category>().HasData(
+                new Category { Id = 1, Name = "روايات" },
+                new Category { Id = 2, Name = "علمي" },
+                new Category { Id = 3, Name = "تاريخ" }
+            );
+
+            modelBuilder.Entity<Book>().HasData(
+                new Book { Id = 1, Title = "مئة عام من العزلة", Author = "غابرييل غارسيا ماركيز", ISBN = "978-1", CategoryId = 1, IsAvailable = true },
+                new Book { Id = 2, Title = "موجز تاريخ الزمن", Author = "ستيفن هوكينغ", ISBN = "978-2", CategoryId = 2, IsAvailable = true }
+            );
+        }
+    }
+}

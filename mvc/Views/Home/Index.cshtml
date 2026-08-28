@@ -1,0 +1,26 @@
+﻿@{
+    ViewData["Title"] = "الرئيسية";
+}
+
+<h1 class="mb-4">مرحباً بك في نظام إدارة المكتبة</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="card-stat bg-primary text-white mb-3">
+            <h2>@ViewBag.BooksCount</h2>
+            <p>عدد الكتب</p>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card-stat bg-success text-white mb-3">
+            <h2>@ViewBag.MembersCount</h2>
+            <p>عدد الأعضاء</p>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card-stat bg-warning text-dark mb-3">
+            <h2>@ViewBag.BorrowedCount</h2>
+            <p>كتب مستعارة حالياً</p>
+        </div>
+    </div>
+</div>

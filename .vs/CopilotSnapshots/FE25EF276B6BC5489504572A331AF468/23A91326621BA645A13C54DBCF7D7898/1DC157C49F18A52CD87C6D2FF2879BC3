@@ -1,0 +1,29 @@
+﻿@page
+@model IEnumerable<Library_Management_System_mvc.Models.Member>
+@{
+    ViewData["Title"] = "الأعضاء";
+}
+
+<h1>الأعضاء</h1>
+<a asp-action="Create" class="btn btn-primary mb-3">+ إضافة عضو</a>
+
+<table class="table table-striped">
+    <thead class="table-dark">
+        <tr><th>الاسم</th><th>البريد الإلكتروني</th><th>الهاتف</th><th>إجراءات</th></tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.Email</td>
+                <td>@item.Phone</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info">تفاصيل</a>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">تعديل</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">حذف</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

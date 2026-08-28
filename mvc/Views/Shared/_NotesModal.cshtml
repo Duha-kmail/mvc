@@ -1,0 +1,80 @@
+@{
+    var listUrl = Url.Action("List", "Notes");
+}
+
+<div class="modal fade" id="notesModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">الملاحظات</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="noteForm">
+                    <div class="mb-3">
+                        <label for="noteContent" class="form-label">نص الملاحظة</label>
+                        <textarea id="noteContent" name="content" class="form-control" rows="3" maxlength="1000" required></textarea>
+                    </div>
+                    <div id="noteAlert" class="alert d-none" role="alert"></div>
+                    <button type="submit" class="btn btn-primary">إضافة ملاحظة</button>
+                </form>
+
+                <hr />
+                <div id="notesContainer">جارٍ التحميل...</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    (function () {
+        const form = document.getElementById('noteForm');
+        const content = document.getElementById('noteContent');
+        const alertEl = document.getElementById('noteAlert');
+        const notesContainer = document.getElementById('notesContainer');
+
+        async function loadList(){
+            const listResp = await fetch('@listUrl');
+            if (listResp.ok) {
+                const html = await listResp.text();
+                notesContainer.innerHTML = html;
+            } else {
+                notesContainer.innerHTML = '<div class="text-muted">فشل تحميل الملاحظات</div>';
+            }
+        }
+
+        form.addEventListener('submit', async function (e) {
+            e.preventDefault();
+            alertEl.classList.add('d-none');
+
+            const data = new FormData();
+            data.append('content', content.value);
+
+            const resp = await fetch('@Url.Action("Create","Notes")', { method: 'POST', body: data });
+            if (!resp.ok) {
+                const text = await resp.text();
+                alertEl.classList.remove('d-none');
+                alertEl.classList.add('alert-danger');
+                alertEl.textContent = text || 'حدث خطأ';
+                return;
+            }
+
+            const result = await resp.json();
+            if (result?.success) {
+                alertEl.classList.remove('d-none');
+                alertEl.classList.remove('alert-danger');
+                alertEl.classList.add('alert-success');
+                alertEl.textContent = 'تمت إضافة الملاحظة';
+                content.value = '';
+                // reload list
+                await loadList();
+            }
+        });
+
+        // Load list when modal becomes visible
+        var notesModal = document.getElementById('notesModal');
+        notesModal.addEventListener('shown.bs.modal', function () {
+            loadList();
+        });
+    })();
+</script>
